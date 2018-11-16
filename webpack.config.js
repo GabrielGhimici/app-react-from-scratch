@@ -1,11 +1,23 @@
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require('path');
+
 module.exports = {
-  entry: "./client/index.tsx",
+  entry: {
+    app: ["./client/index.tsx"],
+    vendor: ["react", "react-dom"]
+  },
   output: {
-    filename: "bundle.js",
-    path: __dirname + "/dist/client"
+    filename: "js/[name].bundle.js",
+    path: path.resolve(__dirname, "dist", "client")
   },
 
   devtool: "source-map",
+
+  devServer: {
+    contentBase: path.join(__dirname, "dist", "client"),
+    compress: true,
+    port: 3200
+  },
 
   resolve: {
     extensions: [".ts", ".tsx", ".js", ".json"]
@@ -45,9 +57,9 @@ module.exports = {
       }
     ]
   },
-
-  externals: {
-    "react": "React",
-    "react-dom": "ReactDOM"
-  }
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: path.resolve(__dirname, "client", "index.html")
+    })
+  ]
 };
