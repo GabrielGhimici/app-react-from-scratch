@@ -10,19 +10,25 @@ module.exports = {
     filename: "js/[name].bundle.js",
     path: path.resolve(__dirname, "dist", "client")
   },
-
   devtool: "source-map",
-
   devServer: {
     contentBase: path.join(__dirname, "dist", "client"),
     compress: true,
-    port: 3200
+    port: 3200,
+    proxy: {
+      '/api': {
+        target: 'http://localhost:3000',
+        secure: false
+      },
+      '/': {
+        target: 'http://localhost:3000',
+        secure: false
+      }
+    }
   },
-
   resolve: {
     extensions: [".ts", ".tsx", ".js", ".json"]
   },
-
   module: {
     rules: [
       {

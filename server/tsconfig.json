@@ -12,5 +12,8 @@
     "outDir": "../dist/server",
     "sourceMap": true,
     "target": "es6"
-  }
+  },
+  "exclude": [
+    "node_modules"
+  ]
 }
