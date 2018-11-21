@@ -4,6 +4,7 @@ const path = require('path');
 module.exports = {
   entry: {
     app: ["./client/index.tsx"],
+    styles: "./client/styles.scss",
     vendor: ["react", "react-dom"]
   },
   output: {
