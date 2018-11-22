@@ -3,6 +3,7 @@
   "compilerOptions": {
     "baseUrl": "",
     "declaration": false,
+    "types": ["reflect-metadata"],
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "lib": ["es2016"],

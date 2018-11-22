@@ -6,8 +6,8 @@ export interface ThreadList {
 
 export interface Thread {
   id: number,
-  name: string,
+  title: string,
   owner: string,
-  createDate: string,
-  commentNumber: number
+  description: string,
+  createDate: string
 }

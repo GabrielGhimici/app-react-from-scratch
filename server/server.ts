@@ -2,6 +2,7 @@ import * as Express from 'express';
 import { Next, Request, Response, ServerLoader, ServerSettings } from '@tsed/common';
 import * as Path from 'path';
 import { Exception } from 'ts-httpexceptions';
+import '@tsed/typeorm';
 
 const bodyParser = require('body-parser');
 
@@ -9,9 +10,21 @@ const bodyParser = require('body-parser');
   rootDir: Path.resolve(__dirname),
   port: 3000,
   mount: {
-    '/': '${rootDir}/generic/**/*.js',
-    '/api': '${rootDir}/api/**/*.js'
-  }
+    '/api': '${rootDir}/api/**/*.js',
+    '/': '${rootDir}/generic/**/*.js'
+  },
+  typeorm: [{
+    name: 'default',
+    type: 'mysql',
+    host: 'localhost',
+    port: 3306,
+    database: 'comment_simulator',
+    username: 'root',
+    password: 'admin123',
+    entities: [
+      '${rootDir}/api/model/*.js',
+    ]
+  }]
 })
 export class Server extends ServerLoader {
   public $onMountingMiddlewares(): void|Promise<any> {
