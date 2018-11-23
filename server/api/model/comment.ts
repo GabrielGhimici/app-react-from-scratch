@@ -1,11 +1,12 @@
 import { Entity, PrimaryGeneratedColumn, Column, JoinColumn, ManyToOne } from "typeorm";
-import { MaxLength, Required } from '@tsed/common';
+import { MaxLength, Property, Required } from '@tsed/common';
 import { User } from './user';
 import { Thread } from './thread';
 
 @Entity()
 export class Comment {
   @PrimaryGeneratedColumn()
+  @Property()
   id: number;
 
   @Column()
@@ -25,8 +26,12 @@ export class Comment {
   createdAt: Date;
 
   @ManyToOne(type => User, owner => owner.comments)
+  @JoinColumn({name: 'id_owner'})
+  @Property()
   owner: User;
 
   @ManyToOne(type => Thread, thread => thread.comments)
+  @JoinColumn({name: 'id_parent_thread'})
+  @Property()
   parentThread: Thread
 }

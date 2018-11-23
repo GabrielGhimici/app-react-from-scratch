@@ -23,8 +23,12 @@ const bodyParser = require('body-parser');
     password: 'admin123',
     entities: [
       '${rootDir}/api/model/*.js',
-    ]
-  }]
+    ],
+    logging: true
+  }],
+  logger: {
+    logRequest: false
+  }
 })
 export class Server extends ServerLoader {
   public $onMountingMiddlewares(): void|Promise<any> {

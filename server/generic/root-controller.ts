@@ -1,4 +1,4 @@
-import { Controller, Get, Next, Request, Response, UseAfter } from "@tsed/common";
+import { Controller, Get, Next, Request, Response } from "@tsed/common";
 import * as Path from "path";
 
 @Controller('')

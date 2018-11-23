@@ -1,11 +1,12 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany } from "typeorm";
-import { MaxLength, Required } from '@tsed/common';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany, JoinColumn } from "typeorm";
+import { MaxLength, Property, Required } from '@tsed/common';
 import { User } from './user';
 import { Comment } from './comment';
 
 @Entity()
 export class Thread {
   @PrimaryGeneratedColumn()
+  @Property()
   id: number;
 
   @Column()
@@ -25,8 +26,11 @@ export class Thread {
   createdAt: Date;
 
   @ManyToOne(type => User, owner => owner.threads)
+  @JoinColumn({name: 'id_owner'})
+  @Property()
   owner: User;
 
-  @OneToMany(type => Thread, comment => comment.owner)
+  @OneToMany(type => Comment, comment => comment.parentThread)
+  @Property()
   comments: Array<Comment>;
 }
