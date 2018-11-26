@@ -10,12 +10,10 @@ export class User {
   id: number;
 
   @Column({unique: true})
-  @Required()
   @MaxLength(50)
   username: string;
 
-  @Column()
-  @Required()
+  @Column({select: false})
   @MaxLength(50)
   password: string;
 

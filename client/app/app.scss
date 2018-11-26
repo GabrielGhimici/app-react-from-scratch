@@ -7,14 +7,21 @@
     margin: 0;
     line-height: $toolbar-height;
   }
-  a {
-    padding: 0 $default-spacing;
-    line-height: $toolbar-height;
-    cursor: pointer;
-    border-bottom: 1px solid white;
-    &:hover {
-      font-weight: bold;
-      border-bottom: 2px solid white;
+  .left-content {
+    display: flex;
+    flex-direction: row;
+    a {
+      padding: 0 $default-spacing;
+      line-height: $toolbar-height;
+      cursor: pointer;
+      text-decoration: none;
+      color: white;
+      &.selected {
+        border-bottom: 2px solid white;
+      }
+      &:hover {
+        font-weight: bold;
+      }
     }
   }
 }
