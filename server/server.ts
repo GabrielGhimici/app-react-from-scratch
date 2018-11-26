@@ -4,6 +4,7 @@ import * as Path from 'path';
 import { Exception } from 'ts-httpexceptions';
 import '@tsed/typeorm';
 
+const session = require('express-session');
 const bodyParser = require('body-parser');
 
 @ServerSettings({
@@ -34,6 +35,15 @@ export class Server extends ServerLoader {
   public $onMountingMiddlewares(): void|Promise<any> {
     this.use(bodyParser.json({limit: '10mb'}), bodyParser.json({ type: 'application/vnd.api+json' }));
     this.use(Express.static(`${__dirname}/../client`));
+    this.use(session({
+      secret: 'S3CR37K3Y',
+      saveUninitialized: true,
+      resave: false,
+      cookie: {
+        expires: new Date(Number(new Date())+24*60*60*1000),
+        secure: 'auto'
+      }
+    }));
     return null;
   }
 
