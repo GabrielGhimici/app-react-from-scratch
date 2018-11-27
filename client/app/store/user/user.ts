@@ -1,5 +1,6 @@
 export interface UserState {
   user: User | null,
+  authorize: boolean,
   loading: boolean,
   error: any
 }

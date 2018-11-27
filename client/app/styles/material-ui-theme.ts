@@ -9,6 +9,11 @@ export const theme = createMuiTheme({
   typography: {
     useNextVariants: true
   },
+  props: {
+    MuiButtonBase: {
+      disableRipple: true
+    }
+  },
   overrides: {
     MuiAppBar: {
       root: {

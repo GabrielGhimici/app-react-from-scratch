@@ -28,7 +28,7 @@ const bodyParser = require('body-parser');
     logging: true
   }],
   logger: {
-    logRequest: false
+    logRequest: true
   }
 })
 export class Server extends ServerLoader {

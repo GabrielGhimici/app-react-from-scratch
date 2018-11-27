@@ -7,14 +7,23 @@ import { rootReducer } from './app/store/root.reducer';
 import { Provider } from 'react-redux';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import { theme } from './app/styles/material-ui-theme';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { Router } from 'react-router-dom';
+import { createBrowserHistory } from 'history';
+import { createEpicMiddleware } from 'redux-observable';
+import { RootEpics } from './app/store/root.epics';
 
-const middlewareEnhancer = applyMiddleware(createLogger());
+const epicMiddleware = createEpicMiddleware();
+const middlewareEnhancer = applyMiddleware(createLogger(), epicMiddleware);
 const store = createStore(rootReducer, middlewareEnhancer);
+RootEpics.createEpics().forEach((epic) => {
+  epicMiddleware.run(epic);
+});
+
+export const history = createBrowserHistory();
 
 ReactDOM.render(
   <Provider store={store}>
-      <Router>
+      <Router history={history}>
         <MuiThemeProvider theme={theme}>
           <App/>
         </MuiThemeProvider>

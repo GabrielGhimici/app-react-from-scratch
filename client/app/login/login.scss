@@ -7,15 +7,32 @@
   display: flex;
   .login-card {
     width: 450px;
-    height: 500px;
+    height: 370px;
     margin: auto;
     background-color: white;
     border: 2px solid $primary-color;
     border-radius: 4px;
-    padding: $default-spacing;
-    .form {
-      display: flex;
-      flex-direction: column;
+    position: relative;
+    .non-in-dom {
+      position: absolute;
+      width: 100%;
+    }
+    .with-space {
+      padding: $default-spacing;
+      h1 {
+        text-align: center;
+        color: $primary-color;
+      }
+      .form {
+        display: flex;
+        flex-direction: column;
+
+        .button-container {
+          margin: $default-spacing 0;
+          display: flex;
+          justify-content: center;
+        }
+      }
     }
   }
 }

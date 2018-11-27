@@ -4,7 +4,9 @@ export enum UserActionTypes {
   USER_LOAD_START = '[USER]LOAD_START',
   USER_LOAD_SUCCEEDED = '[USER]LOAD_SUCCEEDED',
   USER_LOAD_FAILED = '[USER]LOAD_FAILED',
-  USER_LOGIN = '[USER]LOGIN',
+  USER_LOGIN_START = '[USER]LOGIN_START',
+  USER_LOGIN_SUCCEEDED = '[USER]LOGIN_SUCCEEDED',
+  USER_LOGIN_FAILED = '[USER]LOGIN_FAILED',
   USER_LOGOUT = '[USER]LOGOUT'
 }
 
@@ -34,11 +36,24 @@ export class UserActions {
 
   static login(username: string, password: string): PayloadAction<any, any> {
     return {
-      type: UserActionTypes.USER_LOGIN,
+      type: UserActionTypes.USER_LOGIN_START,
       payload: {
         username,
         password
       }
+    }
+  }
+
+  static loginSucceeded(): PayloadAction<any, any> {
+    return {
+      type: UserActionTypes.USER_LOGIN_SUCCEEDED,
+    }
+  }
+
+  static loginFailed(error: any): PayloadAction<any, any> {
+    return {
+      type: UserActionTypes.USER_LOGIN_FAILED,
+      error
     }
   }
 
