@@ -11,6 +11,7 @@ import { Router } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import { createEpicMiddleware } from 'redux-observable';
 import { RootEpics } from './app/store/root.epics';
+import UserNotification from './app/user-notification/user-notification';
 
 const epicMiddleware = createEpicMiddleware();
 const middlewareEnhancer = applyMiddleware(createLogger(), epicMiddleware);
@@ -26,6 +27,7 @@ ReactDOM.render(
       <Router history={history}>
         <MuiThemeProvider theme={theme}>
           <App/>
+          <UserNotification/>
         </MuiThemeProvider>
       </Router>
     </Provider>,

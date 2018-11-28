@@ -12,6 +12,9 @@ export const theme = createMuiTheme({
   props: {
     MuiButtonBase: {
       disableRipple: true
+    },
+    MuiIconButton: {
+      disableRipple: true
     }
   },
   overrides: {

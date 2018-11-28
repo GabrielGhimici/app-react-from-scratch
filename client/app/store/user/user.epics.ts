@@ -2,9 +2,10 @@ import { combineEpics, ofType } from 'redux-observable';
 import { UserActions, UserActionTypes } from './user.actions';
 import { catchError, delay, map, switchMap } from 'rxjs/operators';
 import { from, of } from 'rxjs';
-import { history } from '../../../index';
 import axios from 'axios';
 import { PayloadAction } from '../payload-action';
+import { UserNotificationsActions } from '../user-notifications/user-notifications.actions';
+import { NotificationType } from '../user-notifications/user-notifications';
 
 export class UserEpics {
   public createEpics() {
@@ -24,7 +25,14 @@ export class UserEpics {
             switchMap((data: any) => {
               return of(UserActions.loginSucceeded());
             }),
-            catchError((error) => of(UserActions.loginFailed(error)))
+            catchError((error) => of(
+                UserActions.loginFailed(error),
+                UserNotificationsActions.notify({
+                  type: NotificationType.Error,
+                  message: 'Login failed!'
+                })
+              )
+            )
           );
         })
       );
@@ -35,8 +43,12 @@ export class UserEpics {
       .pipe(
         ofType(UserActionTypes.USER_LOGIN_SUCCEEDED),
         map(action => {
-          history.push('/threads');
-          return {type: "[USER]LOGIN_SUCCESSFUL_REDIRECT"};
+          //history.push('/threads');
+          //return {type: "[USER]LOGIN_SUCCESSFUL_REDIRECT"};
+          return UserNotificationsActions.notify({
+            type: NotificationType.Success,
+            message: 'Login with success!'
+          })
         })
       );
   }
