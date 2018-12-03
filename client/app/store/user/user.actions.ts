@@ -1,6 +1,7 @@
 import { PayloadAction } from '../payload-action';
 
 export enum UserActionTypes {
+  CURRENT_USER_LOAD = '[USER]CURRENT_ONE_LOAD',
   USER_LOAD_START = '[USER]LOAD_START',
   USER_LOAD_SUCCEEDED = '[USER]LOAD_SUCCEEDED',
   USER_LOAD_FAILED = '[USER]LOAD_FAILED',
@@ -11,6 +12,12 @@ export enum UserActionTypes {
 }
 
 export class UserActions {
+  static loadCurrentUser(): PayloadAction<any, any> {
+    return {
+      type: UserActionTypes.CURRENT_USER_LOAD
+    }
+  }
+
   static loadUser(id: number): PayloadAction<any, any> {
     return {
       type: UserActionTypes.USER_LOAD_START,
@@ -19,6 +26,7 @@ export class UserActions {
       }
     }
   }
+
   static loadUserSucceeded(user: any): PayloadAction<any, any> {
     return {
       type: UserActionTypes.USER_LOAD_SUCCEEDED,
@@ -27,6 +35,7 @@ export class UserActions {
       }
     }
   }
+
   static loadUserFailed(error: any): PayloadAction<any, any> {
     return {
       type: UserActionTypes.USER_LOAD_FAILED,

@@ -41,7 +41,7 @@ export class Server extends ServerLoader {
       resave: false,
       cookie: {
         expires: new Date(Number(new Date())+24*60*60*1000),
-        secure: 'auto'
+        secure: 'auto',
       }
     }));
     return null;

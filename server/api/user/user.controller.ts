@@ -1,4 +1,4 @@
-import { Controller, Get, PathParams, QueryParams, UseBefore } from '@tsed/common';
+import { Controller, Get, PathParams, QueryParams, Request, UseBefore } from '@tsed/common';
 import { UserService } from './user.service';
 import { User } from '../model/user';
 import { AuthorizationMiddleware } from '../../midlewares/authorization.middleware';
@@ -17,12 +17,21 @@ export class UserController {
     return this.userService.getAllUsers(query);
   }
 
-  @Get('/:id')
+  @Get('/:id(\\d+)')
   @UseBefore(AuthorizationMiddleware)
   getUser(
+    @Request() request,
     @PathParams("id") id: number,
     @QueryParams() query: any
   ): Promise<User> {
     return this.userService.getUser(id, query);
+  }
+
+  @Get('/current')
+  @UseBefore(AuthorizationMiddleware)
+  getCurrentUser(
+    @Request() request,
+  ) {
+    return this.userService.getUser(request.session.user.id, {});
   }
 }

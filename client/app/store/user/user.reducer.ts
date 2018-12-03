@@ -11,6 +11,7 @@ const INITIAL_STATE: UserState = {
 
 export function userReducer(state: UserState = INITIAL_STATE, action: PayloadAction<any, any>) {
   switch (action.type) {
+    case UserActionTypes.CURRENT_USER_LOAD:
     case UserActionTypes.USER_LOAD_START: {
       return {...state, ...{loading: true}}
     }

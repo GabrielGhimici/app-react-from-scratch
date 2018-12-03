@@ -7,7 +7,8 @@ export class AuthorizationMiddleware implements IMiddleware {
     @Response() response,
     @Next() next
   ) {
-    console.log(request.session.token);
+    //console.log(request.session.token);
+    //console.log(request.headers.authorization);
     const token = request.headers.authorization;
     if (!token || token === 'undefined') {
       response.status(401).send('Unauthorized')

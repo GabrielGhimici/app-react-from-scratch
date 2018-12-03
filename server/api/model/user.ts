@@ -27,6 +27,10 @@ export class User {
   @MaxLength(50)
   lastName: string;
 
+  @Column({name:  'is_admin'})
+  @Property()
+  isAdmin: number;
+
   @OneToMany(type => Thread, thread => thread.owner)
   @Property()
   threads: Array<Thread>;

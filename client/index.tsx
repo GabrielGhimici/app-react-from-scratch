@@ -7,7 +7,6 @@ import { rootReducer } from './app/store/root.reducer';
 import { Provider } from 'react-redux';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import { theme } from './app/styles/material-ui-theme';
-import { Router } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import { createEpicMiddleware } from 'redux-observable';
 import { RootEpics } from './app/store/root.epics';
@@ -24,12 +23,10 @@ export const history = createBrowserHistory();
 
 ReactDOM.render(
   <Provider store={store}>
-      <Router history={history}>
-        <MuiThemeProvider theme={theme}>
-          <App/>
-          <UserNotification/>
-        </MuiThemeProvider>
-      </Router>
-    </Provider>,
-    document.getElementById("app")
+    <MuiThemeProvider theme={theme}>
+      <App/>
+      <UserNotification/>
+    </MuiThemeProvider>
+  </Provider>,
+  document.getElementById("app")
 );

@@ -1,4 +1,4 @@
-import { BodyParams, Controller, Post, Request, Required, Response, UseBefore } from '@tsed/common';
+import { BodyParams, Controller, Get, Post, Request, Required, Response, UseBefore } from '@tsed/common';
 import { AuthenticationService } from './authentication.service';
 import { Unauthorized, InternalServerError } from 'ts-httpexceptions';
 import { AuthorizationMiddleware } from '../../midlewares/authorization.middleware';
@@ -23,14 +23,20 @@ export class AuthenticationController {
     return this.authenticationService.checkUser(username, password).then((user) => {
       if (user) {
         request.session.user = user;
+        //console.log("BEFORE ",request.session.token);
         request.session.token = crypto.randomBytes(20).toString('hex');
-        response.cookie('CSToken', request.session.token, request.session.cookie);
+        //console.log("AFTER ", request.session.token);
+        response.cookie('CSToken', request.session.token, {
+          expires: new Date(Number(new Date())+24*60*60*1000),
+          httpOnly: false
+        });
         return 'OK';
       } else {
         throw new Unauthorized('Unauthorized');
       }
     })
   }
+
   @Post('/logout')
   @UseBefore(AuthorizationMiddleware)
   doLogout(
@@ -42,4 +48,5 @@ export class AuthenticationController {
     });
     return 'OK';
   }
+
 }
