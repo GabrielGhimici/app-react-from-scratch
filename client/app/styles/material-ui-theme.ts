@@ -6,6 +6,9 @@ export const theme = createMuiTheme({
       main: '#008CA2'
     }
   },
+  spacing: {
+    unit: 24
+  },
   typography: {
     useNextVariants: true
   },

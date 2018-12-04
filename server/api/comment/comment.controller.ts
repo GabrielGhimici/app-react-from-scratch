@@ -1,7 +1,6 @@
-import { Controller, Get, PathParams, QueryParams, UseBefore } from '@tsed/common';
+import { Controller, Get, PathParams, QueryParams } from '@tsed/common';
 import { CommentService } from './comment.service';
 import { Comment } from '../model/comment';
-import { AuthorizationMiddleware } from '../../midlewares/authorization.middleware';
 
 @Controller('/comments')
 export class UserController {
@@ -10,7 +9,6 @@ export class UserController {
   ) {}
 
   @Get('')
-  @UseBefore(AuthorizationMiddleware)
   getUserList(
     @QueryParams() query: any
   ): Promise<Array<Comment>> {
@@ -18,7 +16,6 @@ export class UserController {
   }
 
   @Get('/:id')
-  @UseBefore(AuthorizationMiddleware)
   getUser(
     @PathParams("id") id: number,
     @QueryParams() query: any

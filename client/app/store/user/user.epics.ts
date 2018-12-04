@@ -13,7 +13,8 @@ export class UserEpics {
     return combineEpics(
       this.loginEpic(),
       this.loginSuccessfulRedirect(),
-      this.loadCurrentUser()
+      this.loadCurrentUser(),
+      this.logoutEpic()
     )
   }
 
@@ -63,15 +64,37 @@ export class UserEpics {
               history.push('/threads');
               return UserActions.loadUserSucceeded(data)
             }),
-            catchError((error) => of(
-              UserActions.loadUserFailed(error),
-              UserNotificationsActions.notify({
-                type: NotificationType.Error,
-                message: 'Load of current user failed!'
-              })
+            catchError((error) => {
+              let errorMessage: string = 'There is a problem with current user loading.';
+              let notificationType: NotificationType = NotificationType.Error;
+              if (error.response.status === 401) {
+                errorMessage = 'Looks you need to login if you want to have full access.';
+                notificationType = NotificationType.Info;
+              }
+              return of(
+                UserActions.loadUserFailed(error),
+                UserNotificationsActions.notify({
+                  type: notificationType,
+                  message: errorMessage
+                })
               )
+              }
             )
           )
+        })
+      );
+  }
+
+  private logoutEpic() {
+    return (action$: any) => action$
+      .pipe(
+        ofType(UserActionTypes.USER_LOGOUT),
+        switchMap(action => {
+          return from(http.post('/auth/logout'))
+            .pipe(
+              map(() => UserActions.logoutSucceeded()),
+              catchError((error) => of(UserActions.logoutFailed()))
+            )
         })
       );
   }

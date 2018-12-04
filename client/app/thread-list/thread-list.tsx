@@ -2,11 +2,14 @@ import * as React from 'react';
 import { Thread } from './store/thread-list';
 import { ThreadListActions } from './store/thread-list.actions';
 import { connect } from 'react-redux';
+import { Paper, Table, TableBody, TableCell, TableHead, TableRow, withStyles } from '@material-ui/core';
+import { styles } from './thread-list.styles';
 
 interface ThreadListProps {
-  threads?: Array<Thread>,
-  loading?: boolean,
-  onLoad?: Function
+  threads: Array<Thread>,
+  loading: boolean,
+  onLoad: Function,
+  classes: any
 }
 
 class ThreadList extends React.Component<ThreadListProps, {}>{
@@ -14,12 +17,36 @@ class ThreadList extends React.Component<ThreadListProps, {}>{
     this.props.onLoad && this.props.onLoad();
   }
   render() {
-    let arr: any = [];
-    arr = this.props.threads && this.props.threads.map((el: any) => <div key={el.id}>{el.id} -> {el.ceva}</div>);
+    const { classes } = this.props;
     return (
-      <React.Fragment>
-        {arr}
-      </React.Fragment>
+      <Paper className={classes.root}>
+        <Table className={classes.table}>
+          <TableHead>
+            <TableRow className={classes.flexContainer}>
+              <TableCell className={classes.smallColumn}>Id</TableCell>
+              <TableCell className={classes.fullGrowColumn}>Title</TableCell>
+              <TableCell className={classes.fixedWidthColumn}>Owner</TableCell>
+              <TableCell className={classes.fixedWidthColumn}>Description</TableCell>
+              <TableCell className={classes.fixedWidthColumn}>CreatedDate</TableCell>
+              <TableCell className={classes.smallColumn}>Actions</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {this.props.threads.map((thread) => {
+              return (
+                <TableRow key={thread.id} className={classes.flexContainer}>
+                  <TableCell className={classes.smallColumn}>{thread.id}</TableCell>
+                  <TableCell className={classes.fullGrowColumn}>{thread.title}</TableCell>
+                  <TableCell className={classes.fixedWidthColumn}>{thread.owner}</TableCell>
+                  <TableCell className={classes.fixedWidthColumn}>{thread.description}</TableCell>
+                  <TableCell className={classes.fixedWidthColumn}>{thread.createDate}</TableCell>
+                  <TableCell className={classes.smallColumn}>{'Some'}</TableCell>
+                </TableRow>
+              )
+            })}
+          </TableBody>
+        </Table>
+      </Paper>
     );
   }
 }
@@ -39,4 +66,4 @@ function mapDispatchToProps(dispatch: any) {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ThreadList);
+export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(ThreadList));

@@ -11,6 +11,7 @@ import { UserActions } from './store/user/user.actions';
 interface RootAppProps {
   user: User;
   handleLogout: Function;
+  handleAppLoad: Function;
 }
 interface RootAppState {
   anchorEl: any;
@@ -32,6 +33,9 @@ class App extends React.Component<RootAppProps,RootAppState> {
 
   handleClose() {
     this.setState({ anchorEl: null });
+  }
+  componentWillMount(): void {
+    this.props.handleAppLoad()
   }
 
   render() {
@@ -85,6 +89,9 @@ function mapDispatchToProps(dispatch: any) {
   return {
     handleLogout: () => {
       dispatch(UserActions.logout());
+    },
+    handleAppLoad: () => {
+      dispatch(UserActions.loadCurrentUser());
     }
   }
 }

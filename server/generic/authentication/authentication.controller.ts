@@ -44,9 +44,13 @@ export class AuthenticationController {
     @Response() response,
   ) {
     request.session.destroy((err) => {
-      throw new InternalServerError('Internal Error')
+      if (err) {
+        console.error('session destroy', err);
+        response.status(500).send();
+      } else {
+        response.status(200).send('OK');
+      }
     });
-    return 'OK';
   }
 
 }

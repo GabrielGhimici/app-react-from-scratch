@@ -30,6 +30,9 @@ export function userReducer(state: UserState = INITIAL_STATE, action: PayloadAct
     case UserActionTypes.USER_LOGIN_FAILED: {
       return {...state, ...{authorize: false, error: action.error}}
     }
+    case UserActionTypes.USER_LOGOUT: {
+      return {...state, ...{user: null}}
+    }
     default:
       return state
   }

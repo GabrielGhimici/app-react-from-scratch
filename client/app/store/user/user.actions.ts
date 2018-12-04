@@ -8,7 +8,9 @@ export enum UserActionTypes {
   USER_LOGIN_START = '[USER]LOGIN_START',
   USER_LOGIN_SUCCEEDED = '[USER]LOGIN_SUCCEEDED',
   USER_LOGIN_FAILED = '[USER]LOGIN_FAILED',
-  USER_LOGOUT = '[USER]LOGOUT'
+  USER_LOGOUT = '[USER]LOGOUT',
+  USER_LOGOUT_SUCCEEDED = '[USER]LOGOUT_SUCCEEDED',
+  USER_LOGOUT_FAILED = '[USER]LOGOUT_FAILED'
 }
 
 export class UserActions {
@@ -69,6 +71,18 @@ export class UserActions {
   static logout(): PayloadAction<any, any> {
     return {
       type: UserActionTypes.USER_LOGOUT
+    }
+  }
+
+  static logoutSucceeded(): PayloadAction<any, any> {
+    return {
+      type: UserActionTypes.USER_LOGOUT_SUCCEEDED
+    }
+  }
+
+  static logoutFailed(): PayloadAction<any, any> {
+    return {
+      type: UserActionTypes.USER_LOGOUT_FAILED
     }
   }
 }

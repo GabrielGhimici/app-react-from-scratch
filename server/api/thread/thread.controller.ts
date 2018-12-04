@@ -1,7 +1,6 @@
 import { Controller, Get, PathParams, QueryParams, UseBefore } from '@tsed/common';
 import { ThreadService } from './thread.service';
 import { Thread } from '../model/thread';
-import { AuthorizationMiddleware } from '../../midlewares/authorization.middleware';
 
 @Controller('/threads')
 export class ThreadController {
@@ -10,7 +9,6 @@ export class ThreadController {
   ) {}
 
   @Get('')
-  @UseBefore(AuthorizationMiddleware)
   getUserList(
     @QueryParams() query: any
   ): Promise<Array<Thread>> {
@@ -18,7 +16,6 @@ export class ThreadController {
   }
 
   @Get('/:id')
-  @UseBefore(AuthorizationMiddleware)
   getUser(
     @PathParams("id") id: number,
     @QueryParams() query: any

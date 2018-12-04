@@ -23,7 +23,8 @@ export class Thread {
   ownerId: number;
 
   @Column({name: 'create_date'})
-  createdAt: Date;
+  @Property()
+  createDate: Date;
 
   @ManyToOne(type => User, owner => owner.threads)
   @JoinColumn({name: 'id_owner'})

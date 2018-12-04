@@ -1,13 +1,13 @@
 import * as React from 'react';
-import { createStyles, IconButton, SnackbarContent, Theme, withStyles } from '@material-ui/core';
+import { IconButton, SnackbarContent, withStyles } from '@material-ui/core';
 import { Close } from '@material-ui/icons';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import ErrorIcon from '@material-ui/icons/Error';
 import InfoIcon from '@material-ui/icons/Info';
 import WarningIcon from '@material-ui/icons/Warning';
-import { amber, green } from '@material-ui/core/colors';
 import { NotificationType } from '../../store/user-notifications/user-notifications';
 import classNames from 'classnames';
+import { styles } from './notification-content.styles';
 
 const variantIcon = {
   success: CheckCircleIcon,
@@ -15,32 +15,6 @@ const variantIcon = {
   error: ErrorIcon,
   info: InfoIcon,
 };
-
-const styles = (theme: Theme) => createStyles({
-  success: {
-    backgroundColor: green[600],
-  },
-  error: {
-    backgroundColor: theme.palette.error.dark,
-  },
-  info: {
-    backgroundColor: theme.palette.primary.dark,
-  },
-  warning: {
-    backgroundColor: amber[700],
-  },
-  icon: {
-    fontSize: 20,
-  },
-  iconVariant: {
-    opacity: 0.9,
-    marginRight: theme.spacing.unit,
-  },
-  message: {
-    display: 'flex',
-    alignItems: 'center',
-  },
-});
 
 interface NotificationContentProps {
   message: string,
