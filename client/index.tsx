@@ -10,7 +10,7 @@ import { theme } from './app/styles/material-ui-theme';
 import { createBrowserHistory } from 'history';
 import { createEpicMiddleware } from 'redux-observable';
 import { RootEpics } from './app/store/root.epics';
-import UserNotification from './app/user-notification/user-notification';
+import UserNotification from './app/core/user-notification/user-notification';
 
 const epicMiddleware = createEpicMiddleware();
 const middlewareEnhancer = applyMiddleware(createLogger(), epicMiddleware);

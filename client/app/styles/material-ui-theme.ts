@@ -10,7 +10,8 @@ export const theme = createMuiTheme({
     unit: 24
   },
   typography: {
-    useNextVariants: true
+    useNextVariants: true,
+    htmlFontSize: 14
   },
   props: {
     MuiButtonBase: {
@@ -25,6 +26,11 @@ export const theme = createMuiTheme({
       root: {
         flexDirection: 'row',
         justifyContent: 'space-between'
+      }
+    },
+    MuiDialogActions: {
+      root: {
+        margin: '0 24px 24px'
       }
     }
   }

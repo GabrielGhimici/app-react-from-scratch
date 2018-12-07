@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { Slide, Snackbar, SnackbarContent } from '@material-ui/core';
 import { connect } from 'react-redux';
-import { Notification, NotificationType } from '../store/user-notifications/user-notifications';
-import { UserNotificationsActions } from '../store/user-notifications/user-notifications.actions';
+import { Notification, NotificationType } from '../../store/user-notifications/user-notifications';
+import { UserNotificationsActions } from '../../store/user-notifications/user-notifications.actions';
 import NotificationContent from './notification-content/notification-content';
 
 interface UserNotificationProps extends Notification{

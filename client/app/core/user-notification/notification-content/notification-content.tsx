@@ -5,7 +5,7 @@ import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import ErrorIcon from '@material-ui/icons/Error';
 import InfoIcon from '@material-ui/icons/Info';
 import WarningIcon from '@material-ui/icons/Warning';
-import { NotificationType } from '../../store/user-notifications/user-notifications';
+import { NotificationType } from '../../../store/user-notifications/user-notifications';
 import classNames from 'classnames';
 import { styles } from './notification-content.styles';
 
