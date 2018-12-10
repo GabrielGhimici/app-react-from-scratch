@@ -10,7 +10,7 @@ import EditIcon from '@material-ui/icons/Edit'
 import { User } from '../store/user/user';
 import { UserNotificationsActions } from '../store/user-notifications/user-notifications.actions';
 import { Notification, NotificationType } from '../store/user-notifications/user-notifications';
-import ThreadComponent from '../thread/thread';
+import ThreadEditComponent from '../thread/thread-edit';
 
 interface ThreadListProps {
   user: User | null,
@@ -21,23 +21,31 @@ interface ThreadListProps {
   classes: any
 }
 
-class ThreadList extends React.Component<ThreadListProps, {}>{
+interface ThreadListState {
+  selectedThreadID: number | undefined;
+}
+
+class ThreadList extends React.Component<ThreadListProps, ThreadListState>{
   constructor(props: ThreadListProps) {
     super(props);
     this.handleDelete = this.handleDelete.bind(this);
-    this.handleEdit = this.handleEdit.bind(this);
+    this.state = {
+      selectedThreadID: undefined
+    }
   }
 
   componentWillMount() {
     this.props.onLoad && this.props.onLoad();
   }
 
-  handleEdit() {
+  handleEdit(data: any) {
     if (this.props.user === null) {
       this.props.handleNotify({
         type: NotificationType.Info,
         message: 'Please login to edit a thread.'
       })
+    } else {
+      this.setState({selectedThreadID: data.id})
     }
   }
 
@@ -58,7 +66,7 @@ class ThreadList extends React.Component<ThreadListProps, {}>{
         {
           icon: 'add',
           onClick: () => {
-            alert("");
+            this.setState({selectedThreadID: -1})
           },
           isFreeAction: true,
           iconProps: {
@@ -109,7 +117,7 @@ class ThreadList extends React.Component<ThreadListProps, {}>{
                 render: (rowData) => {
                   return (
                     <div style={{display: 'flex'}}>
-                      <EditIcon className={`${classes.icon} ${classes.noLeftSpace}`} onClick={this.handleEdit}/>
+                      <EditIcon className={`${classes.icon} ${classes.noLeftSpace}`} onClick={() => {this.handleEdit(rowData)}}/>
                       <DeleteOutlinedIcon className={classes.icon} onClick={this.handleDelete}/>
                     </div>
                   );
@@ -132,7 +140,7 @@ class ThreadList extends React.Component<ThreadListProps, {}>{
             }}
             title={'Threads'}/>
         </MuiThemeProvider>
-        <ThreadComponent open={false}/>
+        <ThreadEditComponent threadId={this.state.selectedThreadID} handleClose={() => {this.setState({selectedThreadID: undefined})}}/>
       </div>
     );
   }
