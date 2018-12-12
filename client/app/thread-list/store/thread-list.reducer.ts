@@ -17,7 +17,7 @@ export function threadListReducer(state: ThreadList = INITIAL_STATE, action: Pay
     case ThreadListActionTypes.THREAD_LIST_LOAD_SUCCEEDED: {
       const processedThreads = (action.payload.threads.slice()).map((thread: any) => {
         thread.owner = `${thread.owner.firstName} ${thread.owner.lastName}`;
-        thread.createDate = moment(thread.createDate).format('dddd, D/MMM/YYYY, hh:mm:ss a');
+        thread.createDate = moment(thread.createDate).format('DD-MMM-YYYY, hh:mm:ss');
         return thread;
       });
       return {...state, ...{loading: false, items: processedThreads}};

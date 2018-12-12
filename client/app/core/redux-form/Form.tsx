@@ -1,44 +1,27 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
+import { Button } from '@material-ui/core';
+import { findSubState } from './redux-form.reducer';
+import { ReduxFormActions } from './redux-form.actions';
 
 interface FormProps {
   connect: Array<any>,
-  state: {[x: string]: any}
+  state: {[key: string]: any}
+  handleUpdate: Function;
 }
 
 interface FormState {
-  values: {[x: string]: any}
+  isValid: boolean;
+  values: {[x: string]: any};
 }
 
 class Form extends React.Component<FormProps, FormState> {
   constructor(props: FormProps) {
     super(props);
     this.state = {
-      values: this.findSubState()
+      isValid: true,
+      values: findSubState(this.props.state, this.props.connect)
     }
-  }
-
-  private findSubState() {
-    let subState = this.props.state;
-    const connect = this.props.connect;
-    for (let i = 0; i < connect.length; i++) {
-      console.log(connect[i]);
-      console.log(subState);
-      if (!connect[i]) {
-        throw new Error('Unable to connect to Store[undefined]');
-      }
-      if (subState instanceof Array && isNaN(Number(connect[i]))) {
-        throw new Error("Path element is not an index!")
-      } else if (subState instanceof Array && Number(connect[i]) < 0) {
-        throw new Error(`Unable to find element at index ${connect[i]}`)
-      }
-      if (!subState[connect[i]]) {
-        throw new Error(`Unable to find ${connect[i-1] ? connect[i-1] : 'rootState'}[${connect[i]}]`)
-      } else {
-        subState = subState[connect[i]]
-      }
-    }
-    return subState;
   }
 
   render() {
@@ -46,6 +29,7 @@ class Form extends React.Component<FormProps, FormState> {
       <React.Fragment>
         {this.props.children}
         ActualState: {JSON.stringify(this.state.values)}
+        <Button onClick = {() => {this.props.handleUpdate(this.props.connect, {values: {authorize: true, loading: true}})}}>Press ME</Button>
       </React.Fragment>
     );
   }
@@ -58,7 +42,11 @@ function mapStateToProps(state: any) {
 }
 
 function mapDispatchToProps(dispatch: any) {
-  return {}
+  return {
+    handleUpdate: (connect: Array<any>, formValue: any) => {
+      dispatch(ReduxFormActions.formChange(connect, formValue));
+    }
+  }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Form)
+export default connect(mapStateToProps, mapDispatchToProps)(Form);
